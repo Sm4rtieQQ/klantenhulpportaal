@@ -36,12 +36,17 @@ class TicketFactory extends Factory
             };
         };
 
+        $createdAt = fake()->dateTimeBetween('-1 month');
+        $updatedAt = fake()->dateTimeBetween($createdAt);
+
         return [
             'title' => fake()->sentence(3),
             'body' => fake()->paragraph(),
             'status' => $status,
-            'created_by' => $createdBy,
-            'assigned_to' => $assignedTo,
+            'created_by_id' => $createdBy,
+            'assigned_to_id' => $assignedTo,
+            'created_at' => $createdAt,
+            'updated_at' => $updatedAt,
         ];
     }
 }

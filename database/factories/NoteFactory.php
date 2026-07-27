@@ -23,6 +23,7 @@ class NoteFactory extends Factory
             'ticket_id' => Ticket::inRandomOrder()->first(),
             'created_by' => User::where('admin', true)->inRandomOrder()->first(),
             'body' => fake()->paragraph(),
+            'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }
 }
