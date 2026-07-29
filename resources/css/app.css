@@ -16,6 +16,10 @@ h1 {
     @apply font-bold text-xl
 }
 
+h6 {
+    @apply text-sm italic
+}
+
 table {
     @apply w-full text-left
 }
@@ -30,7 +34,7 @@ th {
 }
 
 tr {
-    @apply odd:bg-amber-100 even:bg-amber-200;
+    @apply odd:bg-amber-100 even:bg-amber-200 hover:bg-amber-50;
 }
 
 button {

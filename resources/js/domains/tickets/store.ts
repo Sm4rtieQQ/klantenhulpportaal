@@ -8,6 +8,10 @@ ticketStore.actions.getAll();
 
 export const tickets = ticketStore.getters.all;
 
-export const getTicketsSortedBy = (ColumnName: string): ComputedRef<Ticket[]> => {
-    return ticketStore.getters.sortedBy(ColumnName) as ComputedRef<Ticket[]>;
+export const getTicketsSortedBy = (columnName: string, asc: boolean): ComputedRef<Ticket[]> => {
+    return ticketStore.getters.sortedBy(columnName, asc) as ComputedRef<Ticket[]>;
+}
+
+export const getTicket = (id: number) => {
+    return ticketStore.getters.getById(id);
 }

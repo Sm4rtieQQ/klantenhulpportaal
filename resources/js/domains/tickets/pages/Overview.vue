@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
 import { getTicketsSortedBy } from '../store';
 
-const tickets = getTicketsSortedBy('created_at');
+const router = useRouter();
 
+const tickets = getTicketsSortedBy('updated_at', false);
+const getCategories = (ticket: any) => {
+    return ticket.categories.map((c: any) => c.name).join(', ');
+}
 </script>
 
 <template>
@@ -21,13 +26,15 @@ const tickets = getTicketsSortedBy('created_at');
         </thead>
         <tbody>
             <tr v-for="ticket in tickets" :key="ticket.id">
-                <td>{{ ticket.id }}</td>
-                <td>{{ ticket.title }}</td>
-                <td>{{ ticket.categories }}</td>
-                <td>{{ ticket.status }}</td>
-                <td>{{ ticket.created_by }}</td>
-                <td>{{ ticket.assigned_to }}</td>
-                <td class="text-sm">{{ ticket.updated_at }}</td>
+                <router-link :to="{ name: 'tickets.show', params: { id: ticket.id } }" class="contents">
+                    <td>{{ ticket.id }}</td>
+                    <td>{{ ticket.title }}</td>
+                    <td>{{ getCategories(ticket) }}</td>
+                    <td>{{ ticket.status }}</td>
+                    <td>{{ ticket.created_by }}</td>
+                    <td>{{ ticket.assigned_to }}</td>
+                    <td class="text-sm">{{ ticket.updated_at }}</td>
+                </router-link>
             </tr>
         </tbody>
     </table>

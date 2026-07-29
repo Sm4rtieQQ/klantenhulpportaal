@@ -24,6 +24,11 @@
         "checkJs": true,
         "jsx": "preserve",
         "resolveJsonModule": true,
+        "paths": {
+            "@/*": [
+                "./resources/js/*",
+            ]
+        },
     },
     "include": [
         "resources/js/**/*"
