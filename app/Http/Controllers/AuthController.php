@@ -13,19 +13,23 @@ class AuthController extends Controller
         $credentials = $request->validated();
 
         if (Auth::attempt($credentials)) {
+            $user = Auth::user();
             $request->session()->regenerate();
 
             return response()->json([
-                'user' => Auth::user(),
+                'user' => $user,
             ]);
         }
-
-        return response()->json(['message' => 'Ongeldige inloggegevens'], 401);
     }
 
     public function logout(Request $request)
     {
+        if (Auth::user()) {
+            response()->json(['message' => 'Er ging iets mis'], 403);
+        }
+        $request->user()->tokens()->delete();
         $request->session()->invalidate();
-        $request->session()->regenerateToken();
+
+        return response()->json(['message' => 'Succesvol uitgelogd']);
     }
 }

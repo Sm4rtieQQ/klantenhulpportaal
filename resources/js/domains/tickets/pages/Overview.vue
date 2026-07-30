@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { getTicketsSortedBy } from '../store';
+import ErrorMessage from '@/services/error/ErrorMessage.vue';
 
 const router = useRouter();
 
@@ -38,4 +39,6 @@ const getCategories = (ticket: any) => {
             </tr>
         </tbody>
     </table>
+
+    <error-message />
 </template>

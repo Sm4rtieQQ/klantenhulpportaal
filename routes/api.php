@@ -5,10 +5,13 @@ use App\Http\Controllers\TicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
-Route::get('/tickets', [TicketController::class, 'index'])->middleware('auth:sanctum');
+Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/login', [AuthController::class, 'login'])->middleware('guest:sanctum');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        $request->user();
+    });
+    Route::get('/tickets', [TicketController::class, 'index']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
