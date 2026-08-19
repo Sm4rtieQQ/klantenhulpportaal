@@ -43,8 +43,8 @@ class TicketFactory extends Factory
             'title' => fake()->sentence(3),
             'body' => fake()->paragraph(),
             'status' => $status,
-            'created_by_id' => $createdBy,
-            'assigned_to_id' => $assignedTo,
+            'created_by' => $createdBy,
+            'assigned_to' => $assignedTo,
             'created_at' => $createdAt,
             'updated_at' => $updatedAt,
         ];
