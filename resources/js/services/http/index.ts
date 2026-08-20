@@ -2,6 +2,7 @@ import axios from 'axios';
 import { destroyErrors, destroyMessage } from '../error';
 import { setErrorBag, setMessage } from '../error';
 
+
 const http = axios.create({
     baseURL: '/api',
     headers: {

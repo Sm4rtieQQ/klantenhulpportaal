@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
 import { getTicketsSortedBy } from '../store';
 import ErrorMessage from '@/services/error/ErrorMessage.vue';
-
-const router = useRouter();
 
 const tickets = getTicketsSortedBy('updated_at', false);
 const getCategories = (ticket: any) => {
@@ -40,5 +37,5 @@ const getCategories = (ticket: any) => {
         </tbody>
     </table>
 
-    <error-message />
+    <ErrorMessage />
 </template>
