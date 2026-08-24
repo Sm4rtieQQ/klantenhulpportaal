@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import FormError from '@/services/error/FormError.vue';
 import { ref } from 'vue';
+import { router } from '@/router/index.js';
 
 const emit = defineEmits(['submit']);
 
@@ -9,17 +10,20 @@ const form = ref({
     password: '',
 });
 
-const handleSubmit = () => emit('submit', form.value);
+const handleSubmit = async () => {
+    emit('submit', form.value)
+    router.push({ name: 'tickets.overview' });
+}
 
 </script>
 
 <template>
-    <div class="max-w-[500px] mx-auto pt-4">
-        <form @submit.prevent="handleSubmit">
+    <div class="max-w-[500px] grid min-h-screen pt-4 content-center mx-auto">
+        <form @submit.prevent="handleSubmit" class="wrap">
             <div class="grid grid-cols-[120px_auto] gap-2 mb-2">
                 <label class="font-semibold" for="email">Email</label>
                 <div>
-                    <input class="bg-white" name="email" type="email" v-model="form.email">
+                    <input class="bg-white" name="email" v-model="form.email">
                     <FormError name="email" />
                 </div>
                 <label class="font-semibold" for="password">Wachtwoord</label>

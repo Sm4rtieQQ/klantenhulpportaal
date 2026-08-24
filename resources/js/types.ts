@@ -8,3 +8,14 @@ export interface Ticket {
     updated_at: string,
     created_at: string,
 }
+
+export interface User {
+    id: number,
+    name: string,
+    surname: string,
+    role: string,
+    tel: string,
+    email: string,
+    admin: boolean,
+    created_at: string,
+}

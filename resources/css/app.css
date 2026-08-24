@@ -12,6 +12,10 @@ nav {
     @apply py-4 font-semibold bg-amber-300
 }
 
+.wrap {
+    @apply bg-amber-300 p-4
+}
+
 h1 {
     @apply font-bold text-xl
 }

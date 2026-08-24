@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    public function user()
+    {
+        $userData = UserResource::make(Auth::user());
+        return response()->json($userData);
+    }
+
     public function authenticate(AuthRequest $request)
     {
         $credentials = $request->validated();
@@ -28,5 +35,6 @@ class AuthController extends Controller
     public function invalidate(Request $request)
     {
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
     }
 }

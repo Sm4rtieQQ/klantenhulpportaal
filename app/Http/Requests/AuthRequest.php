@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Override;
 
 class AuthRequest extends BaseFormRequest
 {
@@ -24,6 +25,16 @@ class AuthRequest extends BaseFormRequest
         return [
             'email' => ['required', 'email'],
             'password' => ['required'],
+        ];
+    }
+
+    #[Override]
+    public function messages()
+    {
+        return [
+            'email.required' => 'A.u.b. email adres invullen.',
+            'email.email' => 'Email adres ongeldig.',
+            'password.required' => 'A.u.b. wachtwoord invullen.'
         ];
     }
 }
