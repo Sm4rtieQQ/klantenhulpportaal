@@ -2,8 +2,10 @@ import { storeModuleFactory } from "@/services/store";
 
 const commentStore = storeModuleFactory('comments');
 
-commentStore.actions.getAll();
+export const loadComments = async () => {
+    await commentStore.actions.getAll();
+}
 
-export const getTicketComments = (ticketId: number) => {
-    return commentStore.actions.getByFields({ ticket_id: ticketId }) ?? [];
+export const getTicketComments = async (ticketId: number) => {
+    return await commentStore.actions.getByForeignId('ticket', ticketId);
 }

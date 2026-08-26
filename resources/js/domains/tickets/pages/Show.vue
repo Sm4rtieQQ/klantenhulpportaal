@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { getTicket } from '../store';
+import { getTicketComments } from '@/domains/comments/store';
+import { formatDate } from '@/helpers/formatters';
+
 const route = useRoute();
 const ticketId = Number(route.params.id);
 const ticket = getTicket(ticketId);
+const comments = getTicketComments(ticketId);
+console.log('comments', comments);
 
 </script>
 
@@ -12,8 +17,8 @@ const ticket = getTicket(ticketId);
         <h1>{{ ticket.title }}</h1>
         <p class="my-4">{{ ticket.body }}</p>
 
-        <h6>Aangemaakt op: <span>{{ ticket.created_at }}</span></h6>
-        <h6>Laatste update: <span>{{ ticket.updated_at }}</span></h6>
+        <h6>Aangemaakt op: <span>{{ formatDate(ticket.created_at) }}</span></h6>
+        <h6>Laatste update: <span>{{ formatDate(ticket.updated_at) }}</span></h6>
 
         <table class="max-w-80 mt-4">
             <tbody>

@@ -1,14 +1,17 @@
 import { ComputedRef } from "vue";
 import { storeModuleFactory } from "@/services/store";
-import type { Ticket } from "@/types";
+import type { Ticket } from "@/helpers/types";
+import { ref } from "vue";
 
 const ticketStore = storeModuleFactory('tickets');
-
-export const tickets = ticketStore.getters.all;
+export const ticketsInitialized = ref(false);
 
 export const loadTickets = async () => {
     await ticketStore.actions.getAll();
+    ticketsInitialized.value = true;
 }
+
+export const tickets = ticketStore.getters.all;
 
 export const getTicketsSortedBy = (columnName: string, asc: boolean): ComputedRef<Ticket[]> => {
     return ticketStore.getters.sortedByField(columnName, asc) as ComputedRef<Ticket[]>;

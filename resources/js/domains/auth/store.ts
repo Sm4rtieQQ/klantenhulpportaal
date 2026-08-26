@@ -1,6 +1,6 @@
 import { Ref, ref } from "vue";
 import axios from "axios";
-import type { User } from "@/types";
+import type { User } from "@/helpers/types";
 
 const user: Ref<User> | Ref<null> = ref(null);
 const authInitialized = ref(false);

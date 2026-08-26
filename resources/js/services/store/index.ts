@@ -1,6 +1,5 @@
 import { computed, ref } from "vue"
 import { deleteRequest, getRequest, postRequest, putRequest } from "../http";
-import { loadTickets } from "@/domains/tickets/store";
 
 export const storeModuleFactory = (moduleName: string) => {
     const state: any = ref({});
@@ -14,8 +13,13 @@ export const storeModuleFactory = (moduleName: string) => {
                 const aVal = a[columnName];
                 const bVal = b[columnName];
 
-                if (aVal < bVal) return -1;
-                if (aVal > bVal) return 1;
+                if (asc) {
+                    if (aVal < bVal) return -1;
+                    if (aVal > bVal) return 1;
+                } else {
+                    if (aVal > bVal) return -1;
+                    if (aVal < bVal) return 1;
+                }
 
                 return 0;
             });
@@ -42,9 +46,8 @@ export const storeModuleFactory = (moduleName: string) => {
             return data;
         },
 
-        getByFields: async (filters: Record<string, any>) => {
-            const queryString = new URLSearchParams(filters).toString();
-            const { data } = await getRequest(`${moduleName}?${queryString}`);
+        getByForeignId: async (foreignKey: string, foreignId: number) => {
+            const { data } = await getRequest(`${moduleName}/${foreignKey}/${foreignId}`);
             if (!data) return;
             setters.setAll(data);
             return data;
@@ -72,8 +75,4 @@ export const storeModuleFactory = (moduleName: string) => {
     }
 
     return { getters, setters, actions }
-}
-
-export const loadStores = async () => {
-    await loadTickets();
 }

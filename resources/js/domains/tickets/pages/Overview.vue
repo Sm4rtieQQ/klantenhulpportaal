@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { getTicketsSortedBy } from '../store';
+import { ticketsInitialized, loadTickets, getTicketsSortedBy } from '../store';
 import ErrorMessage from '@/services/error/ErrorMessage.vue';
+import { onMounted } from 'vue';
+import { formatDate } from '@/helpers/formatters';
 
 const tickets = getTicketsSortedBy('updated_at', false);
 const getCategories = (ticket: any) => {
     return ticket.categories.map((c: any) => c.name).join(', ');
 }
+
+onMounted(async () => {
+    if (!ticketsInitialized.value) {
+        await loadTickets();
+    }
+});
+
 </script>
 
 <template>
@@ -31,7 +40,7 @@ const getCategories = (ticket: any) => {
                     <td>{{ ticket.status }}</td>
                     <td>{{ ticket.created_by }}</td>
                     <td>{{ ticket.assigned_to }}</td>
-                    <td class="text-sm">{{ ticket.updated_at }}</td>
+                    <td class="text-sm">{{ formatDate(ticket.updated_at) }}</td>
                 </router-link>
             </tr>
         </tbody>

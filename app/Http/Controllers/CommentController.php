@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Comment;
 use App\Http\Resources\CommentResource;
 
 class CommentController extends Controller
 {
-    public function index(request $request)
+    public function index()
     {
-        $comments = \App\Models\Comment::query();
+        return CommentResource::collection(Comment::get());
+    }
 
-        foreach ($request->query() as $field => $value) {
-            $comments->where($field, $value);
-        }
-
-        return CommentResource::collection($comments->get());
+    public function getCommentsByTicketId(int $ticketId)
+    {
+        $comments = Comment::where('ticket_id', $ticketId)->get();
+        return CommentResource::collection($comments);
     }
 }

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, watch } from 'vue';
 import { useAuth } from './domains/auth/store';
-import { loadStores } from './services/store';
 import Login from './domains/auth/components/Login.vue';
 
 const { user, authInitialized, initializeAuth, login, logout } = useAuth();
@@ -12,7 +11,6 @@ watch(
     [user, authInitialized],
     async ([currentUser, initialized]) => {
         if (currentUser && initialized) {
-            await loadStores();
         }
     }
 );
