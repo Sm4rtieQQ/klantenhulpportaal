@@ -1,6 +1,9 @@
 import { Ref, ref } from "vue";
 import axios from "axios";
 import type { User } from "@/helpers/types";
+import { clearComments } from "@/domains/comments/store";
+import { clearNotes } from "@/domains/notes/store";
+import { clearTickets } from "@/domains/tickets/store";
 
 const user: Ref<User> | Ref<null> = ref(null);
 const authInitialized = ref(false);
@@ -34,9 +37,15 @@ export function useAuth() {
     }
 
     const logout = async () => {
-        await axios.post('/api/logout');
-        user.value = null;
-        console.log('Uitgelogd.');
+        try {
+            await axios.post('/api/logout');
+            console.log('Uitgelogd');
+        } finally {
+            clearTickets();
+            clearComments();
+            clearNotes();
+            user.value = null;
+        }
     }
 
     return {

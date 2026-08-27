@@ -21,14 +21,14 @@ const handleSubmit = async () => {
     <div class="max-w-[500px] grid min-h-screen pt-4 content-center mx-auto">
         <form @submit.prevent="handleSubmit" class="wrap">
             <div class="grid grid-cols-[120px_auto] gap-2 mb-2">
-                <label class="font-semibold" for="email">Email</label>
+                <label for="email">Email</label>
                 <div>
-                    <input class="bg-white" name="email" v-model="form.email">
+                    <input id="email" v-model="form.email">
                     <FormError name="email" />
                 </div>
-                <label class="font-semibold" for="password">Wachtwoord</label>
+                <label for="password">Wachtwoord</label>
                 <div>
-                    <input class="bg-white" name="password" type="password" v-model="form.password">
+                    <input id="password" type="password" v-model="form.password">
                     <FormError name="password" />
                 </div>
             </div>

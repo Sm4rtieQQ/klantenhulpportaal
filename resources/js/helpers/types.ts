@@ -1,11 +1,28 @@
+export interface Comment {
+    id: number,
+    ticket_id: number,
+    created_by: string,
+    body: string,
+    created_at: string,
+}
+
 export interface Ticket {
     id: number,
     title: string,
     categories: string,
+    body: string,
     status: string,
     created_by: string,
     assigned_to: string | null,
     updated_at: string,
+    created_at: string,
+}
+
+export interface Note {
+    id: number,
+    ticket_id: number,
+    created_by: string,
+    body: string,
     created_at: string,
 }
 

@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
     'title',
     'body',
     'status',
-    'created_by',
-    'assigned_to',
+    'created_by_id',
+    'assigned_to_id',
 ])]
 class Ticket extends Model
 {
@@ -34,11 +34,11 @@ class Ticket extends Model
 
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class);
     }
 
     public function assignedTo()
     {
-        return $this->belongsTo(User::class, 'assigned_to');
+        return $this->belongsTo(User::class);
     }
 }

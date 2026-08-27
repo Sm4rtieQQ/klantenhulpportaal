@@ -22,10 +22,11 @@ return new class extends Migration
             $table->string('title');
             $table->text('body');
             $table->string('status');
-            $table->foreignId('created_by')
+            $table->foreignId('created_by_id')
                 ->constrained('users')
                 ->onDelete('cascade');
-            $table->foreignId('assigned_to');
+            $table->foreignId('assigned_to_id')
+                ->nullable();
             $table->timestamps();
         });
 

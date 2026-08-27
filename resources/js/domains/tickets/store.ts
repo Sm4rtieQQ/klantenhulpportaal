@@ -13,10 +13,20 @@ export const loadTickets = async () => {
 
 export const tickets = ticketStore.getters.all;
 
+export const clearTickets = () => {
+    ticketStore.setters.clear();
+    ticketsInitialized.value = false;
+}
+
 export const getTicketsSortedBy = (columnName: string, asc: boolean): ComputedRef<Ticket[]> => {
     return ticketStore.getters.sortedByField(columnName, asc) as ComputedRef<Ticket[]>;
 }
 
 export const getTicket = (id: number) => {
     return ticketStore.getters.getById(id);
+}
+
+export const addTicket = async (newTicket: Ticket) => {
+    await ticketStore.actions.create(newTicket);
+    ticketStore.actions.getAll();
 }

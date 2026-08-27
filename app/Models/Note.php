@@ -16,7 +16,7 @@ class Note extends Model
         return $this->belongsTo(Ticket::class);
     }
 
-    public function created_by()
+    public function createdBy()
     {
         return $this->belongsTo(User::class);
     }

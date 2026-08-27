@@ -38,4 +38,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    function notes()
+    {
+        return $this->hasMany(Note::class);
+    }
+
+    function createdTickets()
+    {
+        return $this->hasMany(Ticket::class, 'created_by');
+    }
+
+    function assignedTickets()
+    {
+        return $this->hasMany(Ticket::class, 'assigned_to');
+    }
 }

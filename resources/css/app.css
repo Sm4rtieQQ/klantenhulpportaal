@@ -8,39 +8,64 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-nav {
-    @apply py-4 font-semibold bg-amber-300
-}
-
 .wrap {
-    @apply bg-amber-300 p-4
+    @apply bg-amber-300 p-4;
 }
 
 h1 {
-    @apply font-bold text-xl
+    @apply font-bold text-xl mb-6;
+}
+
+h2 {
+    @apply font-bold text-lg mb-4;
+}
+
+h3 {
+    @apply font-semibold mb-2;
+}
+
+h4 {
+    @apply font-semibold text-sm mb-1;
+}
+
+h5 {
+    @apply text-sm;
 }
 
 h6 {
-    @apply text-sm italic
+    @apply text-xs italic;
+}
+
+p {
+    @apply mb-2;
 }
 
 table {
-    @apply w-full text-left
+    @apply w-full text-left;
 }
 
 th,
 td {
-    @apply p-2
+    @apply p-2;
 }
 
 th {
-    @apply bg-amber-300
+    @apply bg-amber-300;
 }
 
 tr {
-    @apply odd:bg-amber-100 even:bg-amber-200 hover:bg-amber-50;
+    @apply odd:bg-amber-100 even:bg-amber-200;
 }
 
 button {
     @apply bg-gray-200 border border-gray-300 cursor-pointer;
+}
+
+label {
+    @apply font-semibold mb-1;
+}
+
+input,
+textarea {
+    @apply bg-white mb-4;
 }

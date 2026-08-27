@@ -33,6 +33,10 @@ export const storeModuleFactory = (moduleName: string) => {
             for (const item of items) state.value[item.id] = Object.freeze(item);
         },
 
+        clear: () => {
+            state.value = {};
+        },
+
         deleteByItem: (item: any) => {
             delete state.value[item.id];
         },
@@ -46,8 +50,9 @@ export const storeModuleFactory = (moduleName: string) => {
             return data;
         },
 
-        getByForeignId: async (foreignKey: string, foreignId: number) => {
-            const { data } = await getRequest(`${moduleName}/${foreignKey}/${foreignId}`);
+        getByFields: async (filters: Record<string, any>) => {
+            const queryString = new URLSearchParams(filters).toString();
+            const { data } = await getRequest(`${moduleName}?${queryString}`);
             if (!data) return;
             setters.setAll(data);
             return data;

@@ -21,9 +21,8 @@ class CommentFactory extends Factory
     {
         return [
             'ticket_id' => Ticket::inRandomOrder()->first(),
-            'created_by' => User::inRandomOrder()->first(),
+            'created_by_id' => User::inRandomOrder()->first(),
             'body' => fake()->paragraph(),
-            'created_at' => fake()->dateTimeBetween('-1 month'),
         ];
     }
 }
