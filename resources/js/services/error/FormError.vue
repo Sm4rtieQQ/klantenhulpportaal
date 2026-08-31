@@ -1,6 +1,6 @@
 <template>
-    <div v-for="error in getErrorByProperty(name).value" :key="error">
-        {{ error }}
+    <div v-if="getErrorByProperty(name)" class="text-red-500 text-sm">
+        {{ getErrorByProperty(name) }}
     </div>
 </template>
 

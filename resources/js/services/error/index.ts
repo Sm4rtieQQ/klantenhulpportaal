@@ -24,4 +24,4 @@ export const setMessage = (newMessage: string) => {
 }
 
 export const destroyErrors = () => (errorBag.value = {});
-export const destroyMessage = () => (message.value = '');
+export const destroyMessage = () => (message.value = '');   

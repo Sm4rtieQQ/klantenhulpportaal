@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use App\Http\Resources\CommentResource;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Comment::query();
+        $ticket = Ticket::findOrFail($request->query('ticket_id'));
 
-        foreach ($request->query() as $field => $value) {
-            $query->where($field, $value);
-        }
+        Gate::authorize('view', $ticket);
 
-        return CommentResource::collection($query->get());
+        $comments = Comment::where('ticket_id', $ticket->id)->get();
+
+        return CommentResource::collection($comments);
     }
 }

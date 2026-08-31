@@ -1,25 +1,25 @@
-import { Ref, ref } from "vue";
-import axios from "axios";
+import { ref } from "vue";
 import type { User } from "@/helpers/types";
 import { clearComments } from "@/domains/comments/store";
 import { clearNotes } from "@/domains/notes/store";
 import { clearTickets } from "@/domains/tickets/store";
+import { getRequest, postRequest } from "@/services/http";
 
-const user: Ref<User> | Ref<null> = ref(null);
+const user = ref<User | null>(null);
 const authInitialized = ref(false);
 
 export function useAuth() {
     const initializeAuth = async () => {
         try {
-            await axios.get('/sanctum/csrf-cookie');
+            // await getRequest('/sanctum/csrf-cookie');
 
-            const response = await axios.get('/api/user');
+            const response = await getRequest('/user');
             user.value = response.data;
-            console.log('Succevol ingelogd.', user.value);
+            console.log(`Succevol ingelogd als ${user.value?.name} ${user.value?.surname}`);
         } catch (error: any) {
             if (error.response?.status === 401) {
                 user.value = null;
-                console.error('Niet ingelogd.', error.response);
+                console.error('Niet ingelogd.');
             } else {
                 console.error(error)
             }
@@ -29,16 +29,16 @@ export function useAuth() {
     }
 
     const login = async (credentials: any) => {
-        await axios.get('/sanctum/csrf-cookie');
-        await axios.post('/api/login', credentials);
+        await getRequest('/sanctum/csrf-cookie');
+        await postRequest('/login', credentials);
 
-        const response = await axios.get('/api/user');
+        const response = await getRequest('/user');
         user.value = response.data;
     }
 
     const logout = async () => {
         try {
-            await axios.post('/api/logout');
+            await postRequest('/logout', {});
             console.log('Uitgelogd');
         } finally {
             clearTickets();

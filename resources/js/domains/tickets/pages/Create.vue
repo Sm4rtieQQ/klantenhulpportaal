@@ -11,7 +11,7 @@ const { user } = useAuth();
 const newTicket = ref({
     'title': '',
     'body': '',
-    'status': 'New',
+    'status': 'new',
     'created_by': user,
     'assigned_to': null,
 })

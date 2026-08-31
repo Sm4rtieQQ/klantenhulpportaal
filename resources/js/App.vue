@@ -13,7 +13,7 @@ onMounted(initializeAuth);
     <div class="bg-amber-50 min-h-screen">
         <nav v-if="user" class="flex px-20 gap-4 bg-amber-300 py-4">
             <router-link :to="{ name: 'tickets.overview' }" class="font-bold text-lg">Overzicht</router-link>
-            <router-link :to="{ name: 'tickets.create' }"" class=" font-bold text-lg">Nieuw ticket</router-link>
+            <router-link :to="{ name: 'tickets.create' }" class=" font-bold text-lg">Nieuw ticket</router-link>
             <div class="ml-auto">
                 <h4>{{ user.name }} {{ user.surname }}</h4>
                 <h5 v-if="user.admin">Administrator</h5>

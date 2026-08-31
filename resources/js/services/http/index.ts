@@ -29,16 +29,20 @@ http.interceptors.request.use(
 http.interceptors.response.use(
     response => response,
     error => {
-        if (error.response && error.response.status === 401) {
+        if (error.response?.status === 401) {
             setErrorBag(error.response.data.errors);
             setMessage(error.response.data.message || 'Toegang geweigerd.');
         }
 
-        if (error.response && error.response.status === 422) {
+        if (error.response?.status === 403) {
+            setErrorBag(error.response.data.errors);
+            setMessage(error.response.data.message || 'Toegang geweigerd.');
+        }
+
+        if (error.response?.status === 422) {
             setErrorBag(error.response.data.errors);
             setMessage(error.response.data.message);
         }
-
         return Promise.reject(error);
     }
 );
