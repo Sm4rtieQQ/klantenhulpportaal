@@ -19,9 +19,17 @@ class CommentFactory extends Factory
      */
     public function definition(): array
     {
+        $ticket = Ticket::inRandomOrder()->first();
+        if (fake()->boolean()) {
+            $createdById = User::where('admin', true)->inRandomOrder()->first();
+        } else {
+            $createdById = $ticket->createdBy;
+        }
+
+
         return [
-            'ticket_id' => Ticket::inRandomOrder()->first(),
-            'created_by_id' => User::inRandomOrder()->first(),
+            'ticket_id' => $ticket,
+            'created_by_id' => $createdById,
             'body' => fake()->paragraph(),
         ];
     }

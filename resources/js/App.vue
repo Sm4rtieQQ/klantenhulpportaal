@@ -5,7 +5,9 @@ import Login from './domains/auth/components/Login.vue';
 
 const { user, authInitialized, initializeAuth, login, logout } = useAuth();
 
-onMounted(initializeAuth);
+onMounted(async () => {
+    await initializeAuth();
+});
 
 </script>
 

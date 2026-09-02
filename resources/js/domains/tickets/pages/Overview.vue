@@ -31,7 +31,13 @@ const getCategories = (ticket: any) => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="$router.push({
+            <tr v-if="!ticketsInitialized">
+                <td colspan="7">Tickets worden geladen...</td>
+            </tr>
+            <tr v-else-if="tickets.length === 0">
+                <td colspan="7">Geen tickets gevonden</td>
+            </tr>
+            <tr v-else v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="$router.push({
                 name: 'tickets.show',
                 params: { id: ticket.id }
             })">

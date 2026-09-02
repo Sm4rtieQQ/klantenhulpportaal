@@ -23,7 +23,8 @@ const ticket = { ...props.ticket };
             </tr>
             <tr>
                 <th>Toegewezen aan:</th>
-                <td>{{ ticket.assigned_to }}</td>
+                <td v-if="ticket.assigned_to">{{ ticket.assigned_to }}</td>
+                <td v-else>-</td>
             </tr>
             <tr>
                 <th>Aangemaakt op:</th>

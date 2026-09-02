@@ -12,7 +12,7 @@ const newTicket = ref({
     'title': '',
     'body': '',
     'status': 'new',
-    'created_by': user,
+    'created_by': user.value?.name + ' ' + user.value?.surname,
     'assigned_to': null,
 })
 

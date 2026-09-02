@@ -1,14 +1,14 @@
 <script setup lang="ts">
+import { getTicketComments } from '@/domains/comments/store';
+import { getTicketNotes } from '@/domains/notes/store';
+import { Note, type Comment } from '@/helpers/types';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { getTicket, loadTickets, ticketsInitialized } from '../store';
-import { getTicketComments } from '@/domains/comments/store';
-import { Note, type Comment } from '@/helpers/types';
-import Summary from '../components/Summary.vue';
 import Comments from '../components/Comments.vue';
-import { getTicketNotes } from '@/domains/notes/store';
 import Notes from '../components/Notes.vue';
-import ErrorMessage from '@/services/error/ErrorMessage.vue';
+import Summary from '../components/Summary.vue';
+import { getTicket, loadTickets, ticketsInitialized } from '../store';
+import { adminsInitialized, getAdmins } from '@/domains/users/store.js';
 
 const route = useRoute();
 const router = useRouter();
@@ -20,9 +20,8 @@ const comments = ref<Comment[]>([]);
 const notes = ref<Note[]>([]);
 
 onMounted(async () => {
-    if (!ticketsInitialized.value) {
-        await loadTickets();
-    }
+    !adminsInitialized.value ? await getAdmins() : null;
+    !ticketsInitialized.value ? await loadTickets() : null;
     comments.value = await getTicketComments(ticketId);
     notes.value = await getTicketNotes(ticketId);
 });

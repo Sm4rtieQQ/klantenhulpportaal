@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Notecontroller;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'authenticate']);
@@ -21,6 +22,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/tickets', 'store');
     });
 
+    Route::get('/users', [UserController::class, 'getAdmins']);
     Route::get('/comments', [CommentController::class, 'index']);
-    Route::get('/notes', [Notecontroller::class, 'index']);
+    Route::get('/notes', [NoteController::class, 'index']);
 });

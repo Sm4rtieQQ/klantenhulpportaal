@@ -4,6 +4,7 @@ import { clearComments } from "@/domains/comments/store";
 import { clearNotes } from "@/domains/notes/store";
 import { clearTickets } from "@/domains/tickets/store";
 import { getRequest, postRequest } from "@/services/http";
+import { clearUsers } from "../users/store";
 
 const user = ref<User | null>(null);
 const authInitialized = ref(false);
@@ -11,8 +12,6 @@ const authInitialized = ref(false);
 export function useAuth() {
     const initializeAuth = async () => {
         try {
-            // await getRequest('/sanctum/csrf-cookie');
-
             const response = await getRequest('/user');
             user.value = response.data;
             console.log(`Succevol ingelogd als ${user.value?.name} ${user.value?.surname}`);
@@ -44,6 +43,7 @@ export function useAuth() {
             clearTickets();
             clearComments();
             clearNotes();
+            clearUsers();
             user.value = null;
         }
     }
@@ -52,6 +52,7 @@ export function useAuth() {
         user,
         authInitialized,
         isLoggedIn: () => !!user.value,
+        isAdmin: () => user.value?.admin ?? false,
         initializeAuth,
         login,
         logout,

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getRouter } from '@/router/instance';
 import { destroyErrors, destroyMessage } from '../error';
 import { setErrorBag, setMessage } from '../error';
 
@@ -37,6 +38,8 @@ http.interceptors.response.use(
         if (error.response?.status === 403) {
             setErrorBag(error.response.data.errors);
             setMessage(error.response.data.message || 'Toegang geweigerd.');
+
+            getRouter().push({ name: 'error.403' });
         }
 
         if (error.response?.status === 422) {
