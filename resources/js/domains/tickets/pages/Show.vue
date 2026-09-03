@@ -1,29 +1,35 @@
 <script setup lang="ts">
-import { getTicketComments } from '@/domains/comments/store';
-import { getTicketNotes } from '@/domains/notes/store';
-import { Note, type Comment } from '@/helpers/types';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { initializer } from '@/helpers/initializer.js';
+import { getTicket, ticketsInitialized } from '../store';
+import { getTicketComments } from '@/domains/comments/store';
+import { getTicketNotes } from '@/domains/notes/store';
+import { useAuth } from '@/domains/auth/store';
+
 import Comments from '../components/Comments.vue';
 import Notes from '../components/Notes.vue';
 import Summary from '../components/Summary.vue';
-import { getTicket, loadTickets, ticketsInitialized } from '../store';
-import { adminsInitialized, getAdmins } from '@/domains/users/store.js';
+
+import type { Note, Comment } from '@/helpers/types';
 
 const route = useRoute();
 const router = useRouter();
+const { isAdmin } = useAuth();
+const { initializeTickets } = initializer();
 
 const ticketId = Number(route.params.id);
 
-const ticket = getTicket(ticketId);
+let ticket = getTicket(ticketId);
 const comments = ref<Comment[]>([]);
 const notes = ref<Note[]>([]);
 
 onMounted(async () => {
-    !adminsInitialized.value ? await getAdmins() : null;
-    !ticketsInitialized.value ? await loadTickets() : null;
+    initializeTickets();
     comments.value = await getTicketComments(ticketId);
-    notes.value = await getTicketNotes(ticketId);
+    if (isAdmin()) {
+        notes.value = await getTicketNotes(ticketId);
+    }
 });
 
 </script>
@@ -37,14 +43,15 @@ onMounted(async () => {
                     class="cursor-pointer select-none">Bewerk ticket</a>
             </div>
 
-
-            <h3 class="mt-8">Opmerkingen</h3>
-            <Comments :comments="comments" />
+            <div v-if="isAdmin()">
+                <h3 class="mt-8">Notities</h3>
+                <Notes :notes="notes" />
+            </div>
         </div>
 
         <div>
-            <h3>Notities</h3>
-            <Notes :notes="notes" />
+            <h3>Opmerkingen</h3>
+            <Comments :comments="comments" />
         </div>
     </div>
 </template>

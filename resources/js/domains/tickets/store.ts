@@ -1,7 +1,7 @@
 import { ComputedRef } from "vue";
 import { storeModuleFactory } from "@/services/store";
-import type { Ticket } from "@/helpers/types";
 import { ref } from "vue";
+import type { Ticket } from "@/helpers/types";
 
 const ticketStore = storeModuleFactory('tickets');
 export const ticketsInitialized = ref(false);
@@ -28,5 +28,10 @@ export const getTicket = (id: number) => {
 
 export const addTicket = async (newTicket: Ticket) => {
     await ticketStore.actions.create(newTicket);
+    ticketStore.actions.getAll();
+}
+
+export const updateTicket = async (id: number, updatedTicket: Ticket) => {
+    await ticketStore.actions.update(id, updatedTicket);
     ticketStore.actions.getAll();
 }

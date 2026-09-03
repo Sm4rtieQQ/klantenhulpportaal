@@ -29,10 +29,11 @@ class TicketFactory extends Factory
             $rand = fake()->numberBetween(1, 100);
 
             return match (true) {
-                $rand <= 50 => 'pending',
-                $rand <= 85 => 'in_progress',
-                $rand <= 95 => 'completed',
-                default => 'abandoned',
+                $rand <= 5 => 1,    // 'new'
+                $rand <= 50 => 2,   // 'pending'
+                $rand <= 85 => 3,   // 'in_progress'
+                $rand <= 95 => 4,   // 'completed'
+                default => 5,       // 'abandoned'
             };
         };
 

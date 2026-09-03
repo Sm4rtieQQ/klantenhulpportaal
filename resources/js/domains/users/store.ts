@@ -11,7 +11,7 @@ export const clearUsers = () => {
     adminsInitialized.value = false;
 }
 
-export const getAdmins = async () => {
+export const loadAdmins = async () => {
     await userStore.actions.getByFields({ admin: true });
     adminsInitialized.value = true;
 }

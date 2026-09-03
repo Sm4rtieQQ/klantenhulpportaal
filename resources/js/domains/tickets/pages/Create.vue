@@ -11,9 +11,11 @@ const { user } = useAuth();
 const newTicket = ref({
     'title': '',
     'body': '',
-    'status': 'new',
-    'created_by': user.value?.name + ' ' + user.value?.surname,
-    'assigned_to': null,
+    'status': 1,
+    'created_by_name': user.value?.name + ' ' + user.value?.surname,
+    'created_by_id': user.value?.id,
+    'assigned_to_name': null,
+    'assigned_to_id': null,
 })
 
 const handleSubmit = async (data: any) => {

@@ -5,6 +5,7 @@ import { clearNotes } from "@/domains/notes/store";
 import { clearTickets } from "@/domains/tickets/store";
 import { getRequest, postRequest } from "@/services/http";
 import { clearUsers } from "../users/store";
+import { clearCategories } from "../categories/store";
 
 const user = ref<User | null>(null);
 const authInitialized = ref(false);
@@ -41,6 +42,7 @@ export function useAuth() {
             console.log('Uitgelogd');
         } finally {
             clearTickets();
+            clearCategories();
             clearComments();
             clearNotes();
             clearUsers();

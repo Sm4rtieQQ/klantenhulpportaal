@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Notecontroller;
 use App\Http\Controllers\TicketController;
@@ -17,9 +18,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'invalidate');
     });
 
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/categories', 'index');
+        Route::post('/categories', 'store');
+    });
+
     Route::controller(TicketController::class)->group(function () {
         Route::get('/tickets', 'index');
         Route::post('/tickets', 'store');
+        Route::put('/tickets/{id}', 'update');
     });
 
     Route::get('/users', [UserController::class, 'getAdmins']);

@@ -3,7 +3,7 @@ import { onMounted } from 'vue';
 import { useAuth } from './domains/auth/store';
 import Login from './domains/auth/components/Login.vue';
 
-const { user, authInitialized, initializeAuth, login, logout } = useAuth();
+const { user, authInitialized, isAdmin, initializeAuth, login, logout } = useAuth();
 
 onMounted(async () => {
     await initializeAuth();
@@ -15,10 +15,12 @@ onMounted(async () => {
     <div class="bg-amber-50 min-h-screen">
         <nav v-if="user" class="flex px-20 gap-4 bg-amber-300 py-4">
             <router-link :to="{ name: 'tickets.overview' }" class="font-bold text-lg">Overzicht</router-link>
-            <router-link :to="{ name: 'tickets.create' }" class=" font-bold text-lg">Nieuw ticket</router-link>
+            <router-link :to="{ name: 'tickets.create' }" class="font-bold text-lg">Nieuw ticket</router-link>
+            <router-link :to="{ name: 'categories.overview' }" class="font-bold text-lg"
+                v-if="isAdmin()">Categoriën</router-link>
             <div class="ml-auto">
                 <h4>{{ user.name }} {{ user.surname }}</h4>
-                <h5 v-if="user.admin">Administrator</h5>
+                <h5 v-if="isAdmin()">Administrator</h5>
                 <h5 v-else>Gebruiker</h5>
             </div>
             <a @click="logout" class="cursor-pointer text-sm font-semibold">Uitloggen</a>

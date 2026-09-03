@@ -22,14 +22,34 @@ class TicketController extends Controller
 
     public function store(Request $request)
     {
-        $user = $request->created_by;
+        $userId = $request->created_by_id;
 
         Ticket::create([
             'title' => $request->title,
             'body' => $request->body,
             'status' => $request->status,
-            'created_by_id' => $user['id'],
-            'assigned_to_id' => $request->assigned_to,
+            'created_by_id' => $userId,
+            'assigned_to_id' => $request->assigned_to_id,
         ]);
+    }
+
+    public function update(Request $request, int $ticketId)
+    {
+        $ticket = Ticket::find($ticketId);
+        $user = Auth::user();
+        $newData = [
+            'title' => $request->title,
+            'body' => $request->body,
+            'status' => $request->status,
+        ];
+
+        if ($user->admin) {
+            $newData = [
+                'assigned_to_id' => $request->assigned_to_id,
+                'status' => $request->status,
+            ];
+        }
+
+        $ticket->update($newData);
     }
 }

@@ -35,7 +35,7 @@ const getCategories = (ticket: any) => {
                 <td colspan="7">Tickets worden geladen...</td>
             </tr>
             <tr v-else-if="tickets.length === 0">
-                <td colspan="7">Geen tickets gevonden</td>
+                <td colspan="7">Geen tickets gevonden.</td>
             </tr>
             <tr v-else v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="$router.push({
                 name: 'tickets.show',
@@ -44,7 +44,7 @@ const getCategories = (ticket: any) => {
                 <td class="group-hover:bg-black/8">{{ ticket.id }}</td>
                 <td class="group-hover:bg-black/8">{{ ticket.title }}</td>
                 <td class="group-hover:bg-black/8">{{ getCategories(ticket) }}</td>
-                <td class="group-hover:bg-black/8">{{ ticket.status }}</td>
+                <td class="group-hover:bg-black/8">{{ ticket.status_description }}</td>
                 <td class="group-hover:bg-black/8">{{ ticket.created_by }}</td>
                 <td class="group-hover:bg-black/8">{{ ticket.assigned_to }}</td>
                 <td class="group-hover:bg-black/8 text-sm">{{ formatDate(ticket.updated_at) }}</td>

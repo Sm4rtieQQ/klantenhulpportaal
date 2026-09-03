@@ -1,3 +1,9 @@
+export interface Category {
+    id: number,
+    name: string,
+    entries: number,
+}
+
 export interface Comment {
     id: number,
     ticket_id: number,
@@ -12,6 +18,7 @@ export interface Ticket {
     categories: string,
     body: string,
     status: string,
+    status_description: string,
     created_by: string,
     assigned_to: string | null,
     updated_at: string,
