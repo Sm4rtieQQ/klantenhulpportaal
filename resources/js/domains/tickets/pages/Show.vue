@@ -50,7 +50,7 @@ onMounted(async () => {
         </div>
 
         <div>
-            <h3>Opmerkingen</h3>
+            <h3>Reacties</h3>
             <Comments :comments="comments" />
         </div>
     </div>

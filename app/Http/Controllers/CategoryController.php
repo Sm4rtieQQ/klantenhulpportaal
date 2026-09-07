@@ -11,8 +11,6 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        Gate::authorize('viewAny', Category::class);
-
         $categories = Category::get();
 
         return CategoryResource::collection($categories);
@@ -20,10 +18,29 @@ class CategoryController extends Controller
 
     public function store(CategoryRequest $request)
     {
-        Gate::authorize('viewAny', Category::class);
-
         Category::create([
             'name' => $request->name,
         ]);
+    }
+
+    public function update(CategoryRequest $request, int $categoryId)
+    {
+        $category = Category::find($categoryId);
+
+        $newData = [
+            'name' =>  $request->name,
+        ];
+
+        $category->update($newData);
+    }
+
+    public function destroy(Category $category)
+    {
+        if ($category->tickets()->count() > 0) {
+            return response()->json(['message' => 'Kan "' . $category->name . '" niet verwijderen, er zijn nog tickets aan verbonden.'], 409);
+        }
+
+        $category->delete();
+        return response()->json(['message' => $category->name . ' succesvol verwijderd.']);
     }
 }

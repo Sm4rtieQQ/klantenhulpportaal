@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { addCategory } from '../store';
 import FormError from '@/services/error/FormError.vue';
+import type { Category } from '@/helpers/types';
 
-const newCategory = ref({ 'name': '', })
+const props = defineProps<{ category: Partial<Category> }>();
+const form = ref({ ...props.category });
+
+const emit = defineEmits(['submit']);
 
 const handleSubmit = async () => {
-    await addCategory(newCategory.value);
-    newCategory.value.name = ''
+    emit('submit', form.value);
 }
 </script>
 
 <template>
-    <form @submit.prevent="handleSubmit" class="my-4 grid">
-        <label for="name">Nieuwe categorie</label>
-        <input type="text" id="name" v-model="newCategory.name" />
-        <FormError name="name" />
+    <form @submit.prevent="handleSubmit" class="my-4 grid max-w-64 mx-auto">
+        <input type="text" id="name" v-model="form.name" />
         <button type="submit" class="my-4">Opslaan</button>
+        <FormError name="name" />
     </form>
 </template>

@@ -5,25 +5,27 @@ import { getTicket, loadTickets, updateTicket } from '../store';
 import { onMounted, ref } from 'vue';
 import { useAuth } from '@/domains/auth/store.js';
 import { initializer } from '@/helpers/initializer.js';
+import type { Ticket } from '@/helpers/types.js';
 
 const { user } = useAuth();
 
 const route = useRoute();
 const router = useRouter();
-const { initializeAdmins, initializeTickets } = initializer();
+const { initializeAdmins, initializeTickets, initializeCategories } = initializer();
 
 const ticketId = Number(route.params.id);
 
 let ticket = getTicket(ticketId);
 
-const existingTicket = ref({
+const existingTicket = ref<Partial<Ticket>>({
     'title': ticket.value.title,
     'body': ticket.value.body,
     'status': ticket.value.status,
-    'created_by_name': user.value?.name + ' ' + user.value?.surname,
+    'created_by': user.value?.name + ' ' + user.value?.surname,
     'created_by_id': user.value?.id,
-    'assigned_to_name': ticket.value.assigned_to,
-    'assigned_to_id': ticket.value.assigned_to_id,
+    'assigned_to': ticket.value.assigned_to,
+    'assigned_to_id': ticket.value.assigned_to_id || null,
+    'categories': ticket.value.categories ?? [],
 })
 
 const handleSubmit = async (data: any) => {
@@ -34,6 +36,7 @@ const handleSubmit = async (data: any) => {
 
 onMounted(async () => {
     initializeAdmins();
+    initializeCategories();
     initializeTickets();
 });
 </script>

@@ -3,6 +3,9 @@ import { ticketsInitialized, loadTickets, getTicketsSortedBy } from '../store';
 import ErrorMessage from '@/services/error/ErrorMessage.vue';
 import { onMounted } from 'vue';
 import { formatDate } from '@/helpers/formatters';
+import { getRouter } from '@/router/instance';
+
+const router = getRouter();
 
 onMounted(async () => {
     if (!ticketsInitialized.value) {
@@ -37,7 +40,7 @@ const getCategories = (ticket: any) => {
             <tr v-else-if="tickets.length === 0">
                 <td colspan="7">Geen tickets gevonden.</td>
             </tr>
-            <tr v-else v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="$router.push({
+            <tr v-else v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="router.push({
                 name: 'tickets.show',
                 params: { id: ticket.id }
             })">

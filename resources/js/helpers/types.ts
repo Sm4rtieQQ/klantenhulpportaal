@@ -15,12 +15,14 @@ export interface Comment {
 export interface Ticket {
     id: number,
     title: string,
-    categories: string,
+    categories?: Category[],
     body: string,
-    status: string,
+    status: number,
     status_description: string,
     created_by: string,
-    assigned_to: string | null,
+    created_by_id: number,
+    assigned_to?: string | null,
+    assigned_to_id?: number | null,
     updated_at: string,
     created_at: string,
 }

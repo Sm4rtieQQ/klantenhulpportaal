@@ -42,6 +42,11 @@ http.interceptors.response.use(
             getRouter().push({ name: 'error.403' });
         }
 
+        if (error.response?.status === 409) {
+            setErrorBag(error.response.data.errors);
+            setMessage(error.response.data.message || 'Er ging iets mis.')
+        }
+
         if (error.response?.status === 422) {
             setErrorBag(error.response.data.errors);
             setMessage(error.response.data.message);

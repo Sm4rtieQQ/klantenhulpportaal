@@ -13,9 +13,7 @@ export function initializer() {
     }
 
     const initializeCategories = async () => {
-        if (isAdmin()) {
-            !categoriesInitialized.value ? await loadCategories() : null;
-        }
+        !categoriesInitialized.value ? await loadCategories() : null;
     }
 
     const initializeTickets = async () => {

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Form from '@/domains/comments/components/Form.vue';
 import { formatDate } from '@/helpers/formatters';
 import type { Comment } from '@/helpers/types';
 
@@ -9,9 +10,13 @@ const props = withDefaults(defineProps<{ comments?: Comment[] }>(), {
 </script>
 
 <template>
-    <div v-for="comment in props.comments" :key="comment.id" class="my-4 p-4 bg-amber-100">
+    <div v-if="props.comments.length !== 0" v-for="comment in props.comments" :key="comment.id"
+        class="my-4 p-4 bg-amber-100">
         <h4>{{ comment.created_by }}</h4>
         <p>{{ comment.body }}</p>
         <h6>{{ formatDate(comment.created_at) }}</h6>
     </div>
+    <div v-else class="italic">Geen reacties gevonden.</div>
+
+    <Form />
 </template>

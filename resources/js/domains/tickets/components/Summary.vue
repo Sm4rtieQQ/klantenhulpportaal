@@ -10,13 +10,15 @@ const ticket = { ...props.ticket };
 <template>
     <h1>{{ ticket.title }}</h1>
     <p class="my-4">{{ ticket.body }}</p>
+    <span v-for="category in ticket.categories" class="mr-2 border border-gray-300 p-1 text-xs">{{ category.name
+        }}</span>
 
     <table class="max-w-200 mt-4">
         <tbody>
             <tr>
                 <th>Status:</th>
-                <td ">{{ ticket.status_description }}</td>
-                
+                <td>{{ ticket.status_description }}</td>
+
             </tr>
             <tr>
                 <th>Aangemaakt door:</th>

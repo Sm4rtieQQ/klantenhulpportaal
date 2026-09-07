@@ -21,3 +21,7 @@ export const getTicketComments = async (ticketId: number) => {
 export const getCommentsSortedBy = (columnName: string, asc: boolean): ComputedRef<Comment[]> => {
     return commentStore.getters.sortedByField(columnName, asc) as ComputedRef<Comment[]>;
 }
+
+export const addComment = async (newComment: Comment) => {
+    await commentStore.actions.create(newComment);
+}
