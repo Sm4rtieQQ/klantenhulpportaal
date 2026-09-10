@@ -8,6 +8,7 @@ export interface Comment {
     id: number,
     ticket_id: number,
     created_by: string,
+    created_by_id: number,
     body: string,
     created_at: string,
 }

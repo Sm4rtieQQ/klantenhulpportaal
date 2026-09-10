@@ -19,5 +19,6 @@ const handleSubmit = async (data: any) => {
 </script>
 
 <template>
+    <h2>Categorie toevoegen</h2>
     <Form :category="newCategory" @submit="handleSubmit" />
 </template>

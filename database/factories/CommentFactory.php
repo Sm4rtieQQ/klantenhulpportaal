@@ -30,7 +30,7 @@ class CommentFactory extends Factory
         return [
             'ticket_id' => $ticket,
             'created_by_id' => $createdById,
-            'body' => fake()->paragraph(),
+            'body' => fake()->sentence(),
         ];
     }
 }

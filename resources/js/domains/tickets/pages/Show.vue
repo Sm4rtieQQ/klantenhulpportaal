@@ -12,6 +12,7 @@ import Notes from '../components/Notes.vue';
 import Summary from '../components/Summary.vue';
 
 import type { Note, Comment } from '@/helpers/types';
+import Create from '@/domains/comments/pages/Create.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -20,17 +21,23 @@ const { initializeTickets } = initializer();
 
 const ticketId = Number(route.params.id);
 
-let ticket = getTicket(ticketId);
+const ticket = getTicket(ticketId);
 const comments = ref<Comment[]>([]);
 const notes = ref<Note[]>([]);
 
+const refreshComments = async () => {
+    comments.value = await getTicketComments(ticketId);
+};
+
 onMounted(async () => {
     initializeTickets();
-    comments.value = await getTicketComments(ticketId);
+    await refreshComments();
     if (isAdmin()) {
         notes.value = await getTicketNotes(ticketId);
     }
 });
+
+
 
 </script>
 
@@ -51,7 +58,8 @@ onMounted(async () => {
 
         <div>
             <h3>Reacties</h3>
-            <Comments :comments="comments" />
+            <Comments :comments="comments" :ticket-id="ticketId" @saved="refreshComments" />
+            <Create :ticket-id="ticketId" @saved="refreshComments" />
         </div>
     </div>
 </template>

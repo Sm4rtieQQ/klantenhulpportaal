@@ -6,6 +6,7 @@ use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TicketController extends Controller
 {
@@ -50,6 +51,7 @@ class TicketController extends Controller
     public function update(Request $request, int $ticketId)
     {
         $ticket = Ticket::find($ticketId);
+        Gate::authorize('view', $ticket);
         $user = Auth::user();
         $categories = $request->categories;
 

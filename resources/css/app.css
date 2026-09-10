@@ -9,7 +9,15 @@
 }
 
 .wrap {
-    @apply bg-amber-300 p-4;
+    @apply bg-slate-300 p-4;
+}
+
+.actionLink {
+    @apply text-xs font-semibold cursor-pointer;
+}
+
+.destroy {
+    @apply text-red-700 cursor-pointer;
 }
 
 h1 {
@@ -50,11 +58,11 @@ td {
 }
 
 th {
-    @apply bg-amber-300;
+    @apply bg-slate-300;
 }
 
 tr {
-    @apply odd:bg-amber-100 even:bg-amber-200;
+    @apply odd:bg-slate-200 even:bg-slate-300;
 }
 
 button {

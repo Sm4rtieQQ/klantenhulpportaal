@@ -7,8 +7,8 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const router = getRouter();
-const categoryId = Number(route.params.id);
 
+const categoryId = Number(route.params.id);
 const category = getCategory(categoryId);
 
 const existingCategory = ref({
@@ -24,5 +24,6 @@ const handleSubmit = async (data: any) => {
 </script>
 
 <template>
+    <h2>Categorie bewerken</h2>
     <Form :category="existingCategory" @submit="handleSubmit" />
 </template>

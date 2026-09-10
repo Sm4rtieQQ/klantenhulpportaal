@@ -19,7 +19,8 @@ const categories = getCategoriesSortedBy('name');
 <template>
     <div class="w-auto mx-auto">
         <h1>Categoriën</h1>
-        <a @click="router.push({ name: 'categories.create' })" class="font-semibold text-sm">Nieuwe categorie</a>
+        <a @click="router.push({ name: 'categories.create' })" class="font-semibold text-sm cursor-pointer">Nieuwe
+            categorie</a>
         <table>
             <thead>
                 <tr>
@@ -37,10 +38,10 @@ const categories = getCategoriesSortedBy('name');
                 </tr>
                 <tr v-else v-for="category in categories" :key="category.id">
                     <td>{{ category.name }}</td>
-                    <td class="grid text-xs font-semibold space-y-1">
+                    <td class="grid space-y-1">
                         <a @click="router.push({ name: 'categories.edit', params: { id: category.id } })"
-                            class="cursor-pointer">Bewerken</a>
-                        <a @click="deleteCategory(category.id)" class="text-red-700 cursor-pointer">Verwijderen</a>
+                            class="actionLink">Bewerken</a>
+                        <a @click="deleteCategory(category.id)" class="actionLink destroy">Verwijderen</a>
                     </td>
                     <td>{{ category.entries }}</td>
                 </tr>

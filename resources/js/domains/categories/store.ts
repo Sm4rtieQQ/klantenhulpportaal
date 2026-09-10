@@ -1,9 +1,6 @@
 import { Category } from "@/helpers/types";
 import { storeModuleFactory } from "@/services/store";
 import { ComputedRef, ref } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
 
 const categoryStore = storeModuleFactory('categories');
 export const categoriesInitialized = ref(false);

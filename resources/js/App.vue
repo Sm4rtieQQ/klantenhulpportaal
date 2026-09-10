@@ -12,12 +12,14 @@ onMounted(async () => {
 </script>
 
 <template>
-    <div class="bg-amber-50 min-h-screen">
-        <nav v-if="user" class="flex px-20 gap-4 bg-amber-300 py-4">
+    <div class="bg-slate-50 min-h-screen">
+        <nav v-if="user" class="flex px-20 gap-4 bg-slate-300 py-4">
             <router-link :to="{ name: 'tickets.overview' }" class="font-bold text-lg">Overzicht</router-link>
             <router-link :to="{ name: 'tickets.create' }" class="font-bold text-lg">Nieuw ticket</router-link>
             <router-link :to="{ name: 'categories.overview' }" class="font-bold text-lg"
                 v-if="isAdmin()">Categoriën</router-link>
+            <router-link :to="{ name: 'users.overview' }" class="font-bold text-lg"
+                v-if="isAdmin()">Gebruikers</router-link>
             <div class="ml-auto">
                 <h4>{{ user.name }} {{ user.surname }}</h4>
                 <h5 v-if="isAdmin()">Administrator</h5>
@@ -26,7 +28,7 @@ onMounted(async () => {
             <a @click="logout" class="cursor-pointer text-sm font-semibold">Uitloggen</a>
         </nav>
 
-        <div class="px-20 pt-2 grid">
+        <div class="px-20 pt-2 pb-10 grid">
             <h2 v-if="!authInitialized">Authentification in progress...</h2>
 
             <login v-else-if="!user" @submit="login" />
@@ -34,4 +36,5 @@ onMounted(async () => {
             <router-view v-else />
         </div>
     </div>
+
 </template>

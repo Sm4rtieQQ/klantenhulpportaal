@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-#[Fillable(['ticket_id', 'created_by', 'body'])]
+#[Fillable(['ticket_id', 'created_by_id', 'body'])]
 class Comment extends Model
 {
     use HasFactory;

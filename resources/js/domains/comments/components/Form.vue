@@ -1,19 +1,29 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { addComment } from '../store';
 import { Comment } from '@/helpers/types';
 
-const newComment = ref<{ Partial<Comment>}>();
+const props = defineProps<{
+    comment: Partial<Comment>
+    ticketId: number
+}>()
 
-const handleSubmit = async () => {
-    await addComment(newComment.value);
+const form = ref({
+    ...props.comment,
+    ticket_id: props.ticketId
+});
+
+const emit = defineEmits(['submit']);
+
+const handleSubmit = () => {
+    emit('submit', form.value);
+    form.value.body = ''
 }
+
 </script>
 
 <template>
-    <form class="grid">
-        <label>Plaats reactie:</label>
-        <textarea id:comment name:comment v-model="newComment"></textarea>
+    <form @submit.prevent="handleSubmit" class="grid">
+        <textarea id:comment name:comment v-model="form.body"></textarea>
         <button type="submit">>></button>
     </form>
 </template>

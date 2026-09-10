@@ -1,19 +1,21 @@
 <script setup lang="ts">
-import { ticketsInitialized, loadTickets, getTicketsSortedBy } from '../store';
+import { getTicketsSortedBy, ticketsInitialized } from '../store';
 import ErrorMessage from '@/services/error/ErrorMessage.vue';
 import { onMounted } from 'vue';
 import { formatDate } from '@/helpers/formatters';
 import { getRouter } from '@/router/instance';
+import { initializer } from '@/helpers/initializer';
+
+const { initializeTickets } = initializer();
 
 const router = getRouter();
 
 onMounted(async () => {
-    if (!ticketsInitialized.value) {
-        await loadTickets();
-    }
+    initializeTickets();
 });
 
 const tickets = getTicketsSortedBy('updated_at', false);
+
 const getCategories = (ticket: any) => {
     return ticket.categories.map((c: any) => c.name).join(', ');
 }
@@ -42,7 +44,7 @@ const getCategories = (ticket: any) => {
             </tr>
             <tr v-else v-for="ticket in tickets" :key="ticket.id" class="cursor-pointer group" @click="router.push({
                 name: 'tickets.show',
-                params: { id: ticket.id }
+                params: { id: ticket.id },
             })">
                 <td class="group-hover:bg-black/8">{{ ticket.id }}</td>
                 <td class="group-hover:bg-black/8">{{ ticket.title }}</td>

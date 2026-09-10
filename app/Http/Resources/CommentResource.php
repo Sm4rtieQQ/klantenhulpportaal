@@ -17,7 +17,8 @@ class CommentResource extends JsonResource
         return [
             'id' => $this->id,
             'ticket_id' => $this->ticket_id,
-            'created_by' => $this->createdBy ? $this->createdBy->name . ' ' . $this->createdBy->surname : null,
+            'created_by' => $this->createdBy->name . ' ' . $this->createdBy->surname,
+            'created_by_id' => $this->created_by_id,
             'body' => $this->body,
 
             'created_at' => $this->created_at,
