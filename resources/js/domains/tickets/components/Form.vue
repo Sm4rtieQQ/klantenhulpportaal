@@ -4,6 +4,7 @@ import { getAdminsSortedBy } from '@/domains/users/store.js';
 import { useAuth } from '@/domains/auth/store';
 import { getCategoriesSortedBy } from '@/domains/categories/store';
 import type { Ticket } from '@/helpers/types';
+import FormError from '@/services/error/FormError.vue';
 
 const { isAdmin } = useAuth();
 
@@ -26,9 +27,11 @@ const handleSubmit = () => emit('submit', form.value)
     <form @submit.prevent="handleSubmit" class="grid gap-4">
         <fieldset class="grid">
             <label for=" title">Titel</label>
+            <FormError name="title" />
             <input id="title" v-model="form.title" type="text" />
 
             <label for="body">Omschrijving</label>
+            <FormError name="body" />
             <textarea id="body" v-model="form.body" class="min-h-50"></textarea>
         </fieldset>
 

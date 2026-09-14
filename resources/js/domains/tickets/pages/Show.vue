@@ -29,11 +29,15 @@ const refreshComments = async () => {
     comments.value = await getTicketComments(ticketId);
 };
 
+const refreshNotes = async () => {
+    notes.value = await getTicketNotes(ticketId);
+}
+
 onMounted(async () => {
     initializeTickets();
     await refreshComments();
     if (isAdmin()) {
-        notes.value = await getTicketNotes(ticketId);
+        await refreshNotes();
     }
 });
 
@@ -51,7 +55,7 @@ onMounted(async () => {
             </div>
 
             <div v-if="isAdmin()">
-                <h3 class="mt-8">Notities</h3>
+                <h3 class="mt-8">Notities <span class="text-xs italic font-normal">Admin-only</span></h3>
                 <Notes :notes="notes" />
             </div>
         </div>

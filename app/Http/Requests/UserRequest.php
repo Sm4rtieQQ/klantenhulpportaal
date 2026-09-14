@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +22,15 @@ class CommentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'body' => ['required', 'string'],
-            'ticket_id' => ['required', 'integer'],
-        ];
-    }
+        $textRules = ['required', 'string', 'max:255'];
 
-    public function messages(): array
-    {
         return [
-            'body.required' => 'Typ hier om te reageren.',
+            'name' => $textRules,
+            'surname' => $textRules,
+            'email' => [...$textRules, 'email'],
+            'role' => $textRules,
+            'tel' => $textRules,
+            'admin' => ['required', 'boolean'],
         ];
     }
 }

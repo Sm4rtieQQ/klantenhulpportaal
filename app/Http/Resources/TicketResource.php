@@ -32,9 +32,9 @@ class TicketResource extends JsonResource
             'status' => $this->status,
             'status_description' => $statusDescription($this->status),
 
-            'created_by' => $this->createdBy->name . ' ' . $this->createdBy->surname,
+            'created_by' => $this->createdBy ? $this->createdBy->name . ' ' . $this->createdBy->surname : 'geen',
             'created_by_id' => $this->createdBy->id,
-            'assigned_to' => $this->assignedTo ? $this->assignedTo->name . ' ' . $this->assignedTo->surname : null,
+            'assigned_to' => $this->assignedTo ? $this->assignedTo->name . ' ' . $this->assignedTo->surname : 'geen',
             'assigned_to_id' => $this->assignedTo ? $this->assignedTo->id : null,
 
             'created_at' => $this->created_at,

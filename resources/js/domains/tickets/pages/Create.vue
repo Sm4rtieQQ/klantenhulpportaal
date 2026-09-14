@@ -17,6 +17,7 @@ const newTicket = ref<Partial<Ticket>>({
     'status': 1,
     'created_by_id': user.value?.id,
     'assigned_to_id': null,
+    'categories': [],
 })
 
 const handleSubmit = async (data: any) => {

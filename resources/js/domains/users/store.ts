@@ -39,3 +39,11 @@ export const getUsersSortedBy = (columnName: string, asc: boolean = true): Compu
 export const getAdminsSortedBy = (columnName: string, asc: boolean): ComputedRef<User[]> => {
     return adminStore.getters.sortedByField(columnName, asc) as ComputedRef<User[]>;
 }
+
+export const updateUser = (id: number, data: any) => {
+    userStore.actions.update(id, data);
+}
+
+export const deleteUser = async (id: number) => {
+    await userStore.actions.delete(id);
+}

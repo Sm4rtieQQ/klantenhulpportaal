@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Comment } from '@/helpers/types';
+import FormError from '@/services/error/FormError.vue';
 
 const props = defineProps<{
     comment: Partial<Comment>
@@ -23,6 +24,7 @@ const handleSubmit = () => {
 
 <template>
     <form @submit.prevent="handleSubmit" class="grid">
+        <FormError name="body" />
         <textarea id:comment name:comment v-model="form.body"></textarea>
         <button type="submit">>></button>
     </form>

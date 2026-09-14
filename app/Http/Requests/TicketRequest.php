@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class TicketRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,15 +23,21 @@ class CommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'body' => ['required', 'string'],
-            'ticket_id' => ['required', 'integer'],
+            'title' => ['required', 'min:6', 'max:255'],
+            'body' => ['required'],
+            'status' => ['required', 'integer',],
+            'created_by_id' => ['sometimes', 'integer'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'body.required' => 'Typ hier om te reageren.',
+            'title.required' => 'Dit veld is verplicht.',
+            'title.min' => 'Dit veld moet ten minste 6 karakters bevatten.',
+            'title.max' => 'Dit veld mag maximaal 255 karakters bevatten.',
+            'body.required' => 'Dit veld is verplicht.',
+            'created_by_id' => 'Foutieve invoer.',
         ];
     }
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { initializer } from '@/helpers/initializer';
 import { useRoute } from 'vue-router';
-import { getUser, usersInitialized } from '../store';
+import { getUser, loadUsers, updateUser, usersInitialized } from '../store';
 import { onMounted } from 'vue';
 import Form from '../components/Form.vue';
 import { getRouter } from '@/router/instance';
@@ -19,7 +19,10 @@ onMounted(async () => {
     await initializeUsers();
 })
 
-const handleSubmit = async (data: any) => {
+
+const handleSubmit = (data: any) => {
+    updateUser(userId, data);
+    loadUsers();
     router.push({ name: 'users.overview' });
 }
 

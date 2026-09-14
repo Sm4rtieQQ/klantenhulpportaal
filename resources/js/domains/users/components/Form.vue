@@ -7,7 +7,9 @@ const emit = defineEmits(['submit']);
 
 const user = ref({ ...props.user });
 
-const handleSubmit = () => emit('submit', user.value);
+const handleSubmit = () => {
+    emit('submit', user.value);
+};
 </script>
 
 <template>

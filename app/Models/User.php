@@ -51,11 +51,11 @@ class User extends Authenticatable
 
     function createdTickets()
     {
-        return $this->hasMany(Ticket::class, 'created_by');
+        return $this->hasMany(Ticket::class, 'created_by_id');
     }
 
     function assignedTickets()
     {
-        return $this->hasMany(Ticket::class, 'assigned_to');
+        return $this->hasMany(Ticket::class, 'assigned_to_id');
     }
 }

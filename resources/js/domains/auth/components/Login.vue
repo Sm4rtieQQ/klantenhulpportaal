@@ -2,6 +2,7 @@
 import FormError from '@/services/error/FormError.vue';
 import { ref } from 'vue';
 import { router } from '@/router/index.js';
+import ErrorMessage from '@/services/error/ErrorMessage.vue';
 
 const emit = defineEmits(['submit']);
 
@@ -18,7 +19,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-    <div class="max-w-[500px] grid min-h-screen pt-4 content-center mx-auto">
+    <div class="fixed left-1/2 top-1/2 w-full max-w-100 -translate-x-1/2 -translate-y-1/2">
         <form @submit.prevent="handleSubmit" class="wrap">
             <div class="grid grid-cols-[120px_auto] gap-y-2">
                 <label for="email">Email</label>
@@ -32,6 +33,7 @@ const handleSubmit = async () => {
                     <input id="password" type="password" v-model="form.password">
                 </div>
             </div>
+            <ErrorMessage />
             <button type="submit">Inloggen</button>
         </form>
     </div>
