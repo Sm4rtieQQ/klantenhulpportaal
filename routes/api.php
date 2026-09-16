@@ -18,12 +18,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'invalidate');
     });
 
-    Route::controller(CategoryController::class)->middleware('admin')->group(function () {
-        Route::get('/categories', 'index')->withoutMiddleware('admin');
-        Route::post('/categories', 'store');
-        Route::put('/categories/{id}', 'update');
-        Route::delete('/categories/{category}', 'destroy');
-    });
+    Route::controller(CategoryController::class)->middleware('admin')
+        ->group(function () {
+            Route::get('/categories', 'index')->withoutMiddleware('admin');
+            Route::post('/categories', 'store');
+            Route::put('/categories/{id}', 'update');
+            Route::delete('/categories/{category}', 'destroy');
+        });
 
     Route::controller(CommentController::class)->group(function () {
         Route::get('/comments', 'index');
@@ -32,19 +33,25 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/comments/{comment}', 'destroy');
     });
 
+    Route::controller(NoteController::class)->middleware('admin')
+        ->group(function () {
+            Route::get('/notes', 'index');
+            Route::post('/notes', 'store');
+            Route::put('/notes/{note}', 'update');
+            Route::delete('/notes/{note}', 'destroy');
+        });
+
     Route::controller(TicketController::class)->group(function () {
         Route::get('/tickets', 'index');
         Route::post('/tickets', 'store');
         Route::put('/tickets/{id}', 'update');
     });
 
-
-    Route::controller(UserController::class)->middleware('admin')->group(function () {
-        Route::get('/users', 'index');
-        Route::put('/users/{id}', 'update');
-        Route::delete('/users/{user}', 'destroy');
-        Route::get('/admins', 'getAdmins');
-    });
-
-    Route::get('/notes', [NoteController::class, 'index'])->middleware('admin');
+    Route::controller(UserController::class)->middleware('admin')
+        ->group(function () {
+            Route::get('/users', 'index');
+            Route::put('/users/{id}', 'update');
+            Route::delete('/users/{user}', 'destroy');
+            Route::get('/admins', 'getAdmins');
+        });
 });

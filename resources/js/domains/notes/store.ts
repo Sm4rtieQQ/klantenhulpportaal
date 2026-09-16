@@ -21,3 +21,15 @@ export const getTicketNotes = async (ticketId: number) => {
 export const getNotesSortedBy = (columnName: string, asc: boolean): ComputedRef<Note[]> => {
     return noteStore.getters.sortedByField(columnName, asc) as ComputedRef<Note[]>;
 }
+
+export const addNote = async (newNote: Note) => {
+    await noteStore.actions.create(newNote);
+}
+
+export const updateNote = async (id: number, updatedNote: Note) => {
+    await noteStore.actions.update(id, updatedNote);
+}
+
+export const deleteNote = async (id: number) => {
+    await noteStore.actions.delete(id);
+}

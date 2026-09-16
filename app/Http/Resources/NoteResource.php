@@ -14,10 +14,19 @@ class NoteResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        if ($this->createdBy) {
+            $createdBy = $this->createdBy->name . ' ' . $this->createdBy->surname;
+            $createdById = $this->created_by_id;
+        } else {
+            $createdBy = '--gebruiker verwijderd--';
+            $createdById = null;
+        }
         return [
             'id' => $this->id,
             'ticket_id' => $this->ticket_id,
-            'created_by' => $this->createdBy ? $this->createdBy->name . ' ' . $this->createdBy->surname : null,
+            'created_by' => $createdBy,
+            'created_by_id' => $createdById,
+
             'body' => $this->body,
 
             'created_at' => $this->created_at,

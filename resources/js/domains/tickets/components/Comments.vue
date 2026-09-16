@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { deleteComment, getComment } from '@/domains/comments/store';
+import { deleteComment } from '@/domains/comments/store';
 import { formatDate } from '@/helpers/formatters';
 import type { Comment } from '@/helpers/types';
 import { ref } from 'vue';
@@ -29,7 +29,6 @@ const destroy = async (id: number) => {
     await deleteComment(id);
     emit('saved');
 }
-
 </script>
 
 <template>

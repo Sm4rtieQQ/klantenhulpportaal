@@ -6,24 +6,20 @@ use App\Models\User;
 
 class UserPolicy
 {
-    public function delete(User $authUser, User $targetUser)
+    public function deleteTarget(User $authUser, User $targetUser): bool
     {
-        $userName = $targetUser->name . ' ' . $targetUser->surname;
+        return $targetUser->id !== $authUser->id;
+    }
 
-        if ($targetUser->createdTickets()->whereIn('status', [1, 2, 3])->exists()) {
-            return response()->json([
-                'message' => $userName . ' heeft niet-afgehandelde tickets, en kan daarom niet verwijderd worden.'
-            ], 409);
-        }
+    public function hasActiveTickets(User $targetUser): bool
+    {
+        return !$targetUser->createdTickets()
+            ->whereIn('status', [1, 2, 3])
+            ->exists();
+    }
 
-        if ($targetUser->admin) {
-            if ($targetUser->assignedTickets()->exists()) {
-                return response()->json([
-                    'message' => $userName . ' is een administrator aan wie tickets zijn toegewezen, en kan daarom niet verwijderd worden.'
-                ], 409);
-            }
-        }
-
-        return $authUser->admin;
+    public function hasAssignedTickets(User $targetUser): bool
+    {
+        return !($targetUser->admin && $targetUser->assignedTickets()->exists());
     }
 }

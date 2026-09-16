@@ -12,7 +12,6 @@ const router = getRouter();
 const users = getUsersSortedBy('surname');
 
 const targetUser = ref<Partial<User> | null>(null);
-
 const togglePopup = (id?: number) => {
 
     if (id) {
@@ -22,7 +21,6 @@ const togglePopup = (id?: number) => {
         targetUser.value = null;
     }
 }
-
 
 onMounted(() => {
     initializeUsers();

@@ -39,9 +39,19 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        Gate::authorize('delete', $user);
-
         $userName = $user->name . ' ' . $user->surname;
+
+        if (Gate::denies('deleteTarget', $user)) {
+            abort(409, 'U kunt uzelf niet verwijderen, vraag een andere administrator om dit voor u te doen.');
+        }
+
+        if (Gate::forUser($user)->denies('hasActiveTickets', User::class)) {
+            abort(409, $userName . ' heeft niet afgehandelde tickets en kan daarom niet worden verwijderd.');
+        }
+
+        if (Gate::forUser($user)->denies('hasAssignedTickets', User::class)) {
+            abort(409, $userName . ' heeft toegewezen tickets en kan daarom niet worden verwijderd.');
+        }
 
         $user->delete();
         return response()->json([

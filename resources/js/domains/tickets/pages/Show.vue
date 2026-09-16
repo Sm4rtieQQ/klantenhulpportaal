@@ -12,7 +12,8 @@ import Notes from '../components/Notes.vue';
 import Summary from '../components/Summary.vue';
 
 import type { Note, Comment } from '@/helpers/types';
-import Create from '@/domains/comments/pages/Create.vue';
+import CreateComment from '@/domains/comments/pages/Create.vue';
+import CreateNote from '@/domains/notes/pages/Create.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,8 +42,6 @@ onMounted(async () => {
     }
 });
 
-
-
 </script>
 
 <template>
@@ -56,14 +55,15 @@ onMounted(async () => {
 
             <div v-if="isAdmin()">
                 <h3 class="mt-8">Notities <span class="text-xs italic font-normal">Admin-only</span></h3>
-                <Notes :notes="notes" />
+                <Notes :notes="notes" :ticket-id="ticketId" @saved="refreshNotes" />
+                <CreateNote :ticket-id="ticketId" @saved="refreshNotes" />
             </div>
         </div>
 
         <div>
             <h3>Reacties</h3>
             <Comments :comments="comments" :ticket-id="ticketId" @saved="refreshComments" />
-            <Create :ticket-id="ticketId" @saved="refreshComments" />
+            <CreateComment :ticket-id="ticketId" @saved="refreshComments" />
         </div>
     </div>
 </template>
