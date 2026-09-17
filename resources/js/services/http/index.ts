@@ -8,6 +8,8 @@ axios.defaults.withXSRFToken = true;
 
 const http = axios.create({
     baseURL: '/api',
+    withCredentials: true,
+    withXSRFToken: true,
     headers: {
         'Content-Type': 'application/json'
     }
@@ -39,7 +41,7 @@ http.interceptors.response.use(
             setErrorBag(error.response.data.errors);
             setMessage(error.response.data.message || 'Toegang geweigerd.');
 
-            getRouter().push({ name: 'error.403' });
+            // getRouter().push({ name: 'error.403' });
         }
 
         if (error.response?.status === 409) {

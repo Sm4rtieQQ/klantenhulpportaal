@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Models\Ticket;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -49,9 +48,8 @@ class TicketController extends Controller
         $ticket->categories()->attach($categories);
     }
 
-    public function update(TicketRequest $request, int $ticketId)
+    public function update(TicketRequest $request, Ticket $ticket)
     {
-        $ticket = Ticket::find($ticketId);
         Gate::authorize('view', $ticket);
         $user = Auth::user();
         $categories = $request->categories;

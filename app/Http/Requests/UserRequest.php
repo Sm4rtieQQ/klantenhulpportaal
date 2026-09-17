@@ -33,4 +33,13 @@ class UserRequest extends FormRequest
             'admin' => ['required', 'boolean'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            '*.required' => 'Dit veld is verplicht.',
+            '*.string' => 'Ongeldige invoer.',
+            '*.max' => 'Dit veld mag maximaal 255 karakters bevatten.',
+        ];
+    }
 }

@@ -6,22 +6,25 @@ import { clearTickets } from "@/domains/tickets/store";
 import { getRequest, postRequest } from "@/services/http";
 import { clearUsers } from "../users/store";
 import { clearCategories } from "../categories/store";
+import { getRouter } from "@/router/instance";
 
 const user = ref<User | null>(null);
 const authInitialized = ref(false);
 
+function loginMessage() {
+    console.log(`Succevol ingelogd als ${user.value?.name} ${user.value?.surname}`);
+}
+
 export function useAuth() {
     const initializeAuth = async () => {
         try {
-            const response = await getRequest('/user');
-            user.value = response.data;
-            console.log(`Succevol ingelogd als ${user.value?.name} ${user.value?.surname}`);
-        } catch (error: any) {
-            if (error.response?.status === 401) {
-                user.value = null;
-                console.error('Niet ingelogd.');
+            const statusResponse = await getRequest('/auth/status');
+            if (statusResponse.data.isLoggedIn) {
+                const userResponse = await getRequest('/auth/user');
+                user.value = userResponse.data;
+                loginMessage();
             } else {
-                console.error(error)
+                user.value = null;
             }
         } finally {
             authInitialized.value = true;
@@ -30,24 +33,25 @@ export function useAuth() {
 
     const login = async (credentials: any) => {
         await getRequest('/sanctum/csrf-cookie');
-        await postRequest('/login', credentials);
 
-        const response = await getRequest('/user');
-        user.value = response.data;
+        const response = await postRequest('/auth/login', credentials);
+        user.value = response.data.user;
+        loginMessage();
     }
 
     const logout = async () => {
-        try {
-            await postRequest('/logout', {});
-            console.log('Uitgelogd');
-        } finally {
-            clearTickets();
-            clearCategories();
-            clearComments();
-            clearNotes();
-            clearUsers();
-            user.value = null;
-        }
+        await postRequest('/auth/logout', {});
+        console.log('Uitgelogd');
+
+        clearTickets();
+        clearCategories();
+        clearComments();
+        clearNotes();
+        clearUsers();
+        user.value = null;
+        initializeAuth();
+
+        getRouter().push({ name: 'auth.login' });
     }
 
     return {
@@ -59,4 +63,8 @@ export function useAuth() {
         login,
         logout,
     }
+}
+
+export const register = async (data: any) => {
+    await postRequest('/auth/register', data);
 }

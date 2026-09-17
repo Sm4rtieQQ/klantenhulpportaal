@@ -20,8 +20,8 @@ onMounted(async () => {
 })
 
 
-const handleSubmit = (data: any) => {
-    updateUser(userId, data);
+const handleSubmit = async (data: any) => {
+    await updateUser(userId, data);
     loadUsers();
     router.push({ name: 'users.overview' });
 }

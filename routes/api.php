@@ -9,20 +9,21 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('/login', [AuthController::class, 'authenticate']);
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/auth/login', 'login');
+    Route::post('/auth/register', 'register');
+    Route::get('/auth/status', 'status');
+    Route::get('/auth/user', 'user')->middleware('auth:sanctum');
+    Route::post('/auth/logout', 'logout')->middleware('auth:sanctum');
+});
 
-Route::middleware('auth:sanctum')->group(function () {
-
-    Route::controller(AuthController::class)->group(function () {
-        Route::get('/user', 'user');
-        Route::post('/logout', 'invalidate');
-    });
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::controller(CategoryController::class)->middleware('admin')
         ->group(function () {
             Route::get('/categories', 'index')->withoutMiddleware('admin');
             Route::post('/categories', 'store');
-            Route::put('/categories/{id}', 'update');
+            Route::put('/categories/{category}', 'update');
             Route::delete('/categories/{category}', 'destroy');
         });
 
@@ -44,14 +45,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(TicketController::class)->group(function () {
         Route::get('/tickets', 'index');
         Route::post('/tickets', 'store');
-        Route::put('/tickets/{id}', 'update');
+        Route::put('/tickets/{ticket}', 'update');
     });
 
     Route::controller(UserController::class)->middleware('admin')
         ->group(function () {
             Route::get('/users', 'index');
-            Route::put('/users/{id}', 'update');
+            Route::put('/users/{user}', 'update');
             Route::delete('/users/{user}', 'destroy');
-            Route::get('/admins', 'getAdmins');
+            Route::get('/users/admins', 'getAdmins');
         });
 });

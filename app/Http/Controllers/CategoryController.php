@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
-use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -23,10 +22,8 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function update(CategoryRequest $request, int $categoryId)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $category = Category::find($categoryId);
-
         $newData = [
             'name' =>  $request->name,
         ];

@@ -21,10 +21,8 @@ class UserController extends Controller
         return UserResource::collection($admins);
     }
 
-    public function update(UserRequest $request, int $userId)
+    public function update(UserRequest $request, User $user)
     {
-        $user = User::find($userId);
-
         $newData = [
             'name' => $request->name,
             'surname' => $request->surname,

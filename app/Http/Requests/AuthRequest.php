@@ -22,9 +22,22 @@ class AuthRequest extends BaseFormRequest
      */
     public function rules(): array
     {
+        $textRules = ['sometimes', 'required', 'string', 'max:255'];
+
+        $passwordRules = ['required', 'string', 'max:255'];
+
+        if ($this->filled('password_confirmation')) {
+            $passwordRules[] = 'confirmed';
+        }
+
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => ['required', 'string', 'email'],
+            'password' => $passwordRules,
+            'password_confirmation' => $textRules,
+            'name' => $textRules,
+            'surname' => $textRules,
+            'role' => $textRules,
+            'tel' => $textRules,
         ];
     }
 
@@ -32,9 +45,12 @@ class AuthRequest extends BaseFormRequest
     public function messages()
     {
         return [
-            'email.required' => 'A.u.b. email adres invullen.',
-            'email.email' => 'Email adres ongeldig.',
-            'password.required' => 'A.u.b. wachtwoord invullen.'
+            '*.required' => 'Dit veld is verplicht.',
+            '*.string' => 'Ongeldige invoer',
+            '*.max' => 'Dit veld mag maximaal 255 karakters bevatten.',
+            '*.email' => 'Ongeldig emailadres.',
+            'email.unique' => 'Er bestaat al een account met dit emailadres.',
+            'password.confirmed' => 'De wachtwoorden komen niet overeen.',
         ];
     }
 }

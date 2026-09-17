@@ -48,10 +48,10 @@ const handleDelete = async (id: number) => {
         </thead>
         <tbody>
             <tr v-if="!usersInitialized">
-                <td colspan="6">Gebruikers worden geladen...</td>
+                <td colspan="7">Gebruikers worden geladen...</td>
             </tr>
             <tr v-else-if="users.length === 0">
-                <td colspan="6">Geen gebruikers gevonden.</td>
+                <td colspan="7">Geen gebruikers gevonden.</td>
             </tr>
             <template v-else v-for="user in users" :key="user.id">
                 <tr class="cursor-pointer group" @click="router.push({
@@ -73,6 +73,8 @@ const handleDelete = async (id: number) => {
             </template>
         </tbody>
     </table>
+    <ErrorMessage />
+
 
     <div v-if="targetUser" class="fixed top-0 left-0 w-full h-full bg-black/40">
         <div
