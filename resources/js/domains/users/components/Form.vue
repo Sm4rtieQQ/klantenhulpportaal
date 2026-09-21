@@ -7,7 +7,6 @@ const props = defineProps<{ user: User }>();
 const emit = defineEmits(['submit']);
 
 const user = ref({ ...props.user });
-
 const handleSubmit = () => {
     emit('submit', user.value);
 };
@@ -37,10 +36,10 @@ const handleSubmit = () => {
 
         <div class="grid grid-cols-[120px_20px]">
             <label for="isAdmin">Administrator</label>
-            <input id="isAdmin" name="admin" v-model="user.admin" type="radio" :value="1" />
+            <input id="isAdmin" name="admin" v-model="user.admin" type="radio" :value="true" />
 
             <label for="noAdmin">Gebruiker</label>
-            <input id="noAdmin" name="admin" v-model="user.admin" type="radio" :value="0" />
+            <input id="noAdmin" name="admin" v-model="user.admin" type="radio" :value="false" />
         </div>
         <FormError name="admin" />
 

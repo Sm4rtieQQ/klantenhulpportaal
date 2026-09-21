@@ -25,7 +25,9 @@ export const storeModuleFactory = (moduleName: string) => {
             });
         }),
 
-        getByFieldValue: (field: string, value: string) => computed(() => state.value.filter((item: any) => item[field] === value)),
+        getByFieldValue: (field: string, value: unknown) => computed(() =>
+            Object.values(state.value).filter((item: any) => item[field] === value)
+        ),
 
         getById: (id: number) => computed(() => state.value[id]),
     }

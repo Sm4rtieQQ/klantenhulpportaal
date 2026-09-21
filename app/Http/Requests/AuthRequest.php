@@ -24,9 +24,11 @@ class AuthRequest extends BaseFormRequest
     {
         $textRules = ['sometimes', 'required', 'string', 'max:255'];
 
+        $emailRules = ['required', 'string', 'email'];
         $passwordRules = ['required', 'string', 'max:255'];
 
         if ($this->filled('password_confirmation')) {
+            $emailRules[] = 'unique:users,email';
             $passwordRules[] = 'confirmed';
         }
 

@@ -1,12 +1,7 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
 import { useAuth } from './domains/auth/store';
 
-const { user, authInitialized, isAdmin, initializeAuth, logout } = useAuth();
-
-onMounted(async () => {
-    await initializeAuth();
-});
+const { user, authInitialized, isAdmin, isVerified, logout } = useAuth();
 
 </script>
 
@@ -15,16 +10,17 @@ onMounted(async () => {
         <nav v-if="user" class="flex px-10 gap-4 bg-slate-300 py-4 fixed top-0 w-screen shadow-md items-center h-20">
             <span class="font-serif font-bold text-3xl mr-6">Klantenhulpportaal</span>
             <router-link :to="{ name: 'tickets.overview' }"
-                class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded">Overzicht</router-link>
+                class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded"
+                v-if="isVerified">Overzicht</router-link>
             <router-link :to="{ name: 'tickets.create' }"
-                class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded">Nieuw
+                class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded" v-if="isVerified">Nieuw
                 ticket</router-link>
             <router-link :to="{ name: 'categories.overview' }"
                 class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded"
-                v-if="isAdmin()">Categoriën</router-link>
+                v-if="isAdmin() && isVerified">Categoriën</router-link>
             <router-link :to="{ name: 'users.overview' }"
                 class="font-bold text-lg px-3 py-1 hover:bg-black/8 active:bg-black/12 rounded"
-                v-if="isAdmin()">Gebruikers</router-link>
+                v-if="isAdmin() && isVerified">Gebruikers</router-link>
             <div class="ml-auto">
                 <h4>{{ user.name }} {{ user.surname }}</h4>
                 <h5 v-if="isAdmin()">Administrator</h5>

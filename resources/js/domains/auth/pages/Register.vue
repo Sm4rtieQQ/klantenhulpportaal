@@ -68,7 +68,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-    <div class="fixed left-1/2 top-1/4 w-full max-w-100 -translate-x-1/2 -translate-y-1/2">
+    <div class="fixed left-1/2 -translate-x-1/2 top-40 w-full max-w-100">
         <form @submit.prevent="submitForm" class="wrap">
             <h1>Registreren</h1>
             <div class="grid gap-y-2">
@@ -82,5 +82,11 @@ const submitForm = async () => {
             </div>
             <button type="submit">Registreren</button>
         </form>
+        <p class="text-sm">
+            Heb je al een account? Klik
+            <a class="font-semibold cursor-pointer hover:underline active:font-slate-800"
+                @click="router.push({ name: 'auth.login' })">hier</a>
+            om in te loggen.
+        </p>
     </div>
 </template>

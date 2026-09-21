@@ -9,7 +9,13 @@ import { clearCategories } from "../categories/store";
 import { getRouter } from "@/router/instance";
 
 const user = ref<User | null>(null);
+const isVerified = ref(false);
 const authInitialized = ref(false);
+
+const setAuthenticatedUser = (authenticatedUser: User | null) => {
+    user.value = authenticatedUser;
+    isVerified.value = Boolean(authenticatedUser?.verified_at);
+}
 
 function loginMessage() {
     console.log(`Succevol ingelogd als ${user.value?.name} ${user.value?.surname}`);
@@ -18,13 +24,12 @@ function loginMessage() {
 export function useAuth() {
     const initializeAuth = async () => {
         try {
+            setAuthenticatedUser(null);
             const statusResponse = await getRequest('/auth/status');
             if (statusResponse.data.isLoggedIn) {
                 const userResponse = await getRequest('/auth/user');
-                user.value = userResponse.data;
+                setAuthenticatedUser(userResponse.data);
                 loginMessage();
-            } else {
-                user.value = null;
             }
         } finally {
             authInitialized.value = true;
@@ -35,7 +40,7 @@ export function useAuth() {
         await getRequest('/sanctum/csrf-cookie');
 
         const response = await postRequest('/auth/login', credentials);
-        user.value = response.data.user;
+        setAuthenticatedUser(response.data.user);
         loginMessage();
     }
 
@@ -48,8 +53,7 @@ export function useAuth() {
         clearComments();
         clearNotes();
         clearUsers();
-        user.value = null;
-        initializeAuth();
+        setAuthenticatedUser(null);
 
         getRouter().push({ name: 'auth.login' });
     }
@@ -57,6 +61,7 @@ export function useAuth() {
     return {
         user,
         authInitialized,
+        isVerified,
         isLoggedIn: () => !!user.value,
         isAdmin: () => user.value?.admin ?? false,
         initializeAuth,

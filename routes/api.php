@@ -15,7 +15,16 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('/auth/status', 'status');
     Route::get('/auth/user', 'user')->middleware('auth:sanctum');
     Route::post('/auth/logout', 'logout')->middleware('auth:sanctum');
+
+    Route::post('/email/verification-notification', 'resendEmailNotice')
+        ->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
+
+    Route::post('/forgot-password', 'sendPasswordResetLink')
+        ->middleware('guest')->name('password.reset');
+    Route::get('/reset-password/{token}', 'resetPassword')
+        ->middleware('guest')->name('password.update');
 });
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 

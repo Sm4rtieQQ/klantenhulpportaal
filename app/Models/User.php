@@ -34,6 +34,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     protected function casts(): array
     {
         return [
+            'admin' => 'boolean',
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];

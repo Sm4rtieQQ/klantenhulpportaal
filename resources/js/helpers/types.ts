@@ -45,4 +45,5 @@ export interface User {
     email: string,
     admin: boolean,
     created_at: string,
+    verified_at: string | null,
 }

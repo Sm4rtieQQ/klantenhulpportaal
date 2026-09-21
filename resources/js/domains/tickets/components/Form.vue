@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getAdminsSortedBy } from '@/domains/users/store.js';
+import { admins } from '@/domains/users/store.js';
 import { useAuth } from '@/domains/auth/store';
 import { getCategoriesSortedBy } from '@/domains/categories/store';
 import type { Ticket } from '@/helpers/types';
@@ -17,7 +17,6 @@ const form = ref({
     'categories': props.ticket.categories?.map(category => category.id),
 });
 
-const admins = getAdminsSortedBy('surname', true);
 const categories = getCategoriesSortedBy('name', true);
 
 const handleSubmit = () => emit('submit', form.value)

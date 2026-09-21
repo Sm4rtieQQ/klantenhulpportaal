@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Http\Resources\CommentResource;
+use App\Mail\NewComment;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -35,6 +37,8 @@ class CommentController extends Controller
             'created_by_id' => $user->id,
             'body' => $request->body,
         ];
+
+        Mail::send(new NewComment($ticket->createdBy, $ticket));
 
         Comment::create($comment);
     }

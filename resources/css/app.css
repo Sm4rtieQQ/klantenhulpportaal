@@ -20,6 +20,10 @@
     @apply text-red-700 cursor-pointer;
 }
 
+.message {
+    @apply text-xs text-green-600;
+}
+
 h1 {
     @apply font-bold text-xl mb-6;
 }
