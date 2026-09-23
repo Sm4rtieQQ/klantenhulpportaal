@@ -22,10 +22,9 @@ class AuthRequest extends BaseFormRequest
      */
     public function rules(): array
     {
-        $textRules = ['sometimes', 'required', 'string', 'max:255'];
-
         $emailRules = ['required', 'string', 'email'];
         $passwordRules = ['required', 'string', 'max:255'];
+        $textRules = ['sometimes', 'required', 'string', 'max:255'];
 
         if ($this->filled('password_confirmation')) {
             $emailRules[] = 'unique:users,email';
@@ -33,7 +32,7 @@ class AuthRequest extends BaseFormRequest
         }
 
         return [
-            'email' => ['required', 'string', 'email'],
+            'email' => $emailRules,
             'password' => $passwordRules,
             'password_confirmation' => $textRules,
             'name' => $textRules,

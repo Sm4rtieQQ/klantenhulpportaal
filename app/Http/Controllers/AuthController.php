@@ -6,6 +6,7 @@ use App\Http\Requests\AuthRequest;
 use App\Http\Resources\UserResource;
 use App\Mail\EmailVerification;
 use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -97,6 +99,17 @@ class AuthController extends Controller
     }
 
     // password reset
+    public function receivePasswordResetToken(Request $request, string $token)
+    {
+        $email = $request->query('email');
+
+        $user = User::where('email', $email)->first();
+
+        return redirect()->to(
+            '/email/new-password/' . urlencode($token) . '?email=' . urlencode($email)
+        );
+    }
+
     public function sendPasswordResetLink(Request $request)
     {
         $request->validate([
@@ -119,5 +132,36 @@ class AuthController extends Controller
             'message' => 'De resetlink kon niet worden verstuurd.',
             'errors' => ['email' => [__($status)]],
         ], 422);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|string|min:6|confirmed'
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function (User $user, string $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ])->setRememberToken(Str::random(60));
+
+                $user->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status === Password::PasswordReset
+            ? response()->json([
+                'message' => 'Nieuw wachtwoord opgeslagen.'
+            ])
+            : response()->json([
+                'message' => 'Er ging iets mis',
+                'errors' => ['email' => [__($status)]],
+            ]);
     }
 }

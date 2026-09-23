@@ -20,8 +20,10 @@ Route::controller(AuthController::class)->group(function () {
         ->middleware(['auth:sanctum', 'throttle:6,1'])->name('verification.send');
 
     Route::post('/forgot-password', 'sendPasswordResetLink')
+        ->middleware('guest')->name('password.email');
+    Route::get('/reset-password/{token}', 'receivePasswordResetToken')
         ->middleware('guest')->name('password.reset');
-    Route::get('/reset-password/{token}', 'resetPassword')
+    Route::post('/reset-password', 'resetPassword')
         ->middleware('guest')->name('password.update');
 });
 

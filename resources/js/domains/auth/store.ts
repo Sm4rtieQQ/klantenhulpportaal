@@ -73,3 +73,7 @@ export function useAuth() {
 export const register = async (data: any) => {
     await postRequest('/auth/register', data);
 }
+
+export const resetPassword = async (data: any) => {
+    await postRequest('/reset-password', data);
+}

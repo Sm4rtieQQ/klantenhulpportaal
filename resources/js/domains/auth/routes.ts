@@ -9,5 +9,5 @@ export const authRoutes = [
     { path: '/register', component: Register, name: 'auth.register' },
     { path: '/email/verify', component: VerifyEmail, name: 'auth.verify' },
     { path: '/email/forgot-password', component: ForgotPassword, name: 'auth.forgot-password' },
-    { path: '/email/new-password', component: PasswordReset, name: 'auth.new-password' },
+    { path: '/email/new-password/:token?', component: PasswordReset, name: 'auth.new-password' },
 ];
